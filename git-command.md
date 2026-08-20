@@ -339,8 +339,479 @@ git push
 | `git clone URL`             | Download a repository    |
 
 ---
+# 17. Undo Changes ↩️
 
-# My Most Used Commands 🚀
+### Unstage a file but keep the changes:
+
+```bash
+git restore --staged filename.txt
+```
+
+### Discard changes in one file:
+
+```bash
+git restore filename.txt
+```
+
+⚠️ This will permanently remove your uncommitted changes.
+
+### Discard all changes:
+
+```bash
+git restore .
+```
+
+### Undo the last commit but keep your changes:
+
+```bash
+git reset --soft HEAD~1
+```
+
+### Undo the last commit and unstage the changes:
+
+```bash
+git reset HEAD~1
+```
+
+### Completely remove the last commit and changes:
+
+```bash
+git reset --hard HEAD~1
+```
+
+⚠️ Be careful with `--hard` because deleted changes can be difficult to recover.
+
+---
+
+# 18. Git Stash 📦
+
+Use Git stash when you want to temporarily save your changes without committing them.
+
+### Save your current changes:
+
+```bash
+git stash
+```
+
+### See all saved stashes:
+
+```bash
+git stash list
+```
+
+### Apply the latest stash:
+
+```bash
+git stash apply
+```
+
+### Apply and remove the latest stash:
+
+```bash
+git stash pop
+```
+
+### Apply a specific stash:
+
+```bash
+git stash apply stash@{0}
+```
+
+### Delete a specific stash:
+
+```bash
+git stash drop stash@{0}
+```
+
+### Delete all stashes:
+
+```bash
+git stash clear
+```
+
+---
+
+# 19. Git Tags 🏷️
+
+Tags are usually used to mark versions of your project.
+
+### Create a tag:
+
+```bash
+git tag v1.0.0
+```
+
+### Create an annotated tag:
+
+```bash
+git tag -a v1.0.0 -m "Version 1.0.0"
+```
+
+### See all tags:
+
+```bash
+git tag
+```
+
+### Push one tag to GitHub:
+
+```bash
+git push origin v1.0.0
+```
+
+### Push all tags:
+
+```bash
+git push origin --tags
+```
+
+---
+
+# 20. Git Ignore 🚫
+
+Create a file called:
+
+```text
+.gitignore
+```
+
+Use it to stop Git from tracking files or folders you don't want to upload.
+
+Example `.gitignore`:
+
+```text
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# System files
+.DS_Store
+
+# Build files
+dist/
+
+# Log files
+*.log
+```
+
+After creating it:
+
+```bash
+git add .gitignore
+git commit -m "Add gitignore"
+git push
+```
+
+---
+
+# 21. View Git History 📖
+
+### Normal history:
+
+```bash
+git log
+```
+
+### Short history:
+
+```bash
+git log --oneline
+```
+
+### See a visual branch history:
+
+```bash
+git log --oneline --graph --decorate --all
+```
+
+### See changes from a specific commit:
+
+```bash
+git show COMMIT_ID
+```
+
+Example:
+
+```bash
+git show abc123
+```
+
+### See the history of one file:
+
+```bash
+git log -- filename.txt
+```
+
+---
+
+# 22. Working With Remotes 🌍
+
+### Check your remote repositories:
+
+```bash
+git remote -v
+```
+
+### Add a remote:
+
+```bash
+git remote add origin REPOSITORY_URL
+```
+
+### Change a remote URL:
+
+```bash
+git remote set-url origin NEW_REPOSITORY_URL
+```
+
+### Remove a remote:
+
+```bash
+git remote remove origin
+```
+
+### Download changes without merging them:
+
+```bash
+git fetch
+```
+
+### See remote branches:
+
+```bash
+git branch -r
+```
+
+---
+
+# 23. Git Aliases ⚡
+
+Aliases allow you to create shortcuts for Git commands.
+
+### Check existing aliases:
+
+```bash
+git config --global --get-regexp alias
+```
+
+### Create a shortcut for `git status`:
+
+```bash
+git config --global alias.st status
+```
+
+Now you can type:
+
+```bash
+git st
+```
+
+### Useful aliases:
+
+```bash
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.last "log -1 HEAD"
+```
+
+Create a shortcut for a nice Git history:
+
+```bash
+git config --global alias.graph "log --oneline --graph --decorate --all"
+```
+
+Then use:
+
+```bash
+git graph
+```
+
+---
+
+# 24. Useful Advanced Commands 🚀
+
+### Find a bug using Git Bisect:
+
+```bash
+git bisect start
+```
+
+### See where HEAD has been:
+
+```bash
+git reflog
+```
+
+This can help recover commits that you accidentally lost.
+
+### Remove untracked files:
+
+```bash
+git clean -fd
+```
+
+⚠️ Be careful. This permanently deletes untracked files and folders.
+
+### Check repository size and objects:
+
+```bash
+git count-objects -vH
+```
+
+### Check repository integrity:
+
+```bash
+git fsck
+```
+
+---
+
+# 25. Common Git Workflows 🔗
+
+## Basic Feature Branch Workflow
+
+Create a new branch:
+
+```bash
+git switch -c feature-name
+```
+
+Make your changes, then:
+
+```bash
+git add .
+git commit -m "Add new feature"
+```
+
+Push the branch:
+
+```bash
+git push -u origin feature-name
+```
+
+Then create a Pull Request on GitHub.
+
+---
+
+## Keep Your Project Up to Date
+
+Before starting work:
+
+```bash
+git pull
+```
+
+Or:
+
+```bash
+git fetch
+git merge origin/main
+```
+
+---
+
+## Fork and Pull Request Workflow
+
+1. Fork the repository on GitHub.
+2. Clone your fork:
+
+```bash
+git clone YOUR_FORK_URL
+```
+
+3. Create a branch:
+
+```bash
+git switch -c feature-name
+```
+
+4. Make your changes.
+5. Add and commit:
+
+```bash
+git add .
+git commit -m "Describe your changes"
+```
+
+6. Push your branch:
+
+```bash
+git push origin feature-name
+```
+
+7. Create a Pull Request on GitHub.
+
+---
+
+# 26. Good Commit Messages ✍️
+
+Try to make your commit messages clear.
+
+### Good examples:
+
+```bash
+git commit -m "Add user login page"
+```
+
+```bash
+git commit -m "Fix navigation bug"
+```
+
+```bash
+git commit -m "Update README instructions"
+```
+
+### Avoid messages like:
+
+```text
+update
+fix
+asdf
+changes
+```
+
+A good commit message should explain **what changed**.
+
+---
+
+# 27. My Most Used Git Commands 🔥
+
+This is the workflow you will probably use the most:
+
+```bash
+git status
+```
+
+⬇️
+
+```bash
+git add .
+```
+
+⬇️
+
+```bash
+git commit -m "Describe what you changed"
+```
+
+⬇️
+
+```bash
+git push
+```
+
+## Remember:
+
+```text
+git add = prepare changes
+git commit = save changes
+git push = upload changes to GitHub
+```
+
+🔥 **The basic Git workflow:**
 
 ```bash
 git status
@@ -349,10 +820,13 @@ git commit -m "your message"
 git push
 ```
 
-### Remember:
+# Bonus: Before You Push Checklist
 
-**`git add` → `git commit` → `git push`**
+* [ ] Check your changes with `git status`
+* [ ] Review your code
+* [ ] Make sure you are on the correct branch
+* [ ] Run `git add .`
+* [ ] Write a meaningful commit message
+* [ ] Push with `git push`
+* [ ] Check GitHub to make sure your changes were uploaded
 
-1. `git add .` = Prepare your changes
-2. `git commit -m "message"` = Save your changes
-3. `git push` = Upload to GitHub
